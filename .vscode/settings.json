@@ -1,0 +1,10 @@
+{
+  "files.exclude": {
+    ".vscode": true,
+    ".gitignore": true,
+    "Procfile": true,
+    "node_modules": true,
+    "package-lock.json": true,
+    "jest.config.js": true,
+  }
+}
