@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const routes = require('./api');
 const config = require('./config');
+const { handleError, ErrorHandler } = require('./utils/error');
 
 const app = express();
 
@@ -33,19 +34,12 @@ app.use(morgan('tiny'));
 app.use(routes());
 
 app.use((req, res, next) => {
-  const err = new Error('Not Found!');
-  err.status = 404;
-  return next(err);
+  const error = new ErrorHandler(404, 'Not Found!');
+  return next(error);
 });
 
 app.use((error, req, res, next) => {
-  const status = error.status || 500;
-  const message = error.message || 'Internal Server Error';
-
-  return res.status(error.status).json({
-    status,
-    message,
-  });
+  handleError(error, res);
 });
 
 app.listen(config.port, (error) => {

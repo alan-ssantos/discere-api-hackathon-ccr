@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const User = require('./utils/User');
+const User = require('./User');
 
-const mentorSchema = mongoose.Schema({
+const mentorSchema = new mongoose.Schema({
   education: [{
     title: {
       type: String,
