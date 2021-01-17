@@ -1,6 +1,7 @@
 const { Types } = require('mongoose');
 
 const User = require('../models/User');
+const Student = require('../models/Student');
 const Live = require('../models/Live');
 const { ErrorHandler } = require('../utils/error');
 const agoraToken = require('../utils/agoraToken');
@@ -34,6 +35,9 @@ module.exports = {
     live.channelName = channelName;
     live.channelToken = channelToken;
     live.save();
+
+    user.subscriptions.push(live.id);
+    await user.save();
 
     return live.toObject();
   },
@@ -77,6 +81,21 @@ module.exports = {
       liveStatus: live.started ? 'Ended' : 'Not ended',
       live,
     };
+  },
+
+  async subscribe(liveId, userId, userRole) {
+    const user = await User.findById(userId);
+    if (user.role !== 'student') throw new ErrorHandler(400, 'Somente estudantes podem se inscrever.');
+
+    const live = await Live.findById(liveId);
+    if (!live) throw new ErrorHandler(400, 'Live não encontrada.');
+
+    user.subscriptions.push(live.id);
+    await user.save();
+
+    await user.populate('subscriptions').execPopulate();
+
+    return user.toObject();
   },
 
 };
