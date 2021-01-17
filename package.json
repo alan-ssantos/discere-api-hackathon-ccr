@@ -1,0 +1,42 @@
+{
+  "name": "hackathon-ccr-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "12.x"
+  },
+  "scripts": {
+    "preinstall": "npm i pm2 -g",
+    "dev": "set NODE_ENV=test&&nodemon src/server.js",
+    "start": "pm2-runtime start ecosystem.config.js --env production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alan-ssantos/hackathon-ccr-api.git"
+  },
+  "author": "Alan Santos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alan-ssantos/hackathon-ccr-api/issues"
+  },
+  "homepage": "https://github.com/alan-ssantos/hackathon-ccr-api#readme",
+  "dependencies": {
+    "agora-access-token": "^2.0.4",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.9.2",
+    "helmet": "^4.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.12",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.18.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "nodemon": "^2.0.7"
+  }
+}
