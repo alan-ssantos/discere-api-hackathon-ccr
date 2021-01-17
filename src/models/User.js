@@ -31,6 +31,12 @@ const userSchema = new mongoose.Schema({
     state: String,
     city: String,
   },
+  subscriptions: {
+    type: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Live',
+    }],
+  },
 }, options);
 
 userSchema.set('toObject', {

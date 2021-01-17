@@ -95,4 +95,22 @@ module.exports = (router) => {
       return next(error);
     }
   });
+
+  route.post('/:id/subscribe', auth, async (req, res, next) => {
+    try {
+      const { userId, userRole } = req;
+      if (userRole !== 'student') throw new ErrorHandler(403, 'Somente estudantes podem se inscrever.');
+
+      const { id } = req.params;
+      const user = await liveService.subscribe(id, userId, userRole);
+
+      return res.status(200).json({
+        status: 'OK',
+        statusCode: 200,
+        user,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  });
 };

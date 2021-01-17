@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Student = require('../models/Student');
 const Mentor = require('../models/Mentor');
+const Live = require('../models/Live');
 
 const { ErrorHandler } = require('../utils/error');
 
@@ -13,7 +14,7 @@ module.exports = {
   },
 
   async detail(id) {
-    const user = await User.findById(id, '-email');
+    const user = await User.findById(id, '-email').populate('subscriptions');
 
     return user.toObject();
   },
