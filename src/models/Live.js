@@ -6,6 +6,10 @@ const liveSchema = mongoose.Schema({
   title: String,
   description: String,
   date: Date,
+  cover: {
+    type: String,
+    default: 'https://res.cloudinary.com/duosrc/image/upload/v1610919840/04.png',
+  },
   started: {
     type: Boolean,
     default: false,
@@ -18,12 +22,12 @@ const liveSchema = mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: 'User',
   },
-  // category: {
-  //   type: [{
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'Category',
-  //   }],
-  // },
+  category: {
+    type: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+    }],
+  },
 });
 
 liveSchema.set('toObject', {

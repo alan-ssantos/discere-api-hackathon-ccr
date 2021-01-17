@@ -40,11 +40,11 @@ module.exports = (router) => {
   route.post('/', auth, async (req, res, next) => {
     try {
       const { userRole, userId } = req;
-      const { title, description, date } = req.body;
+      const { title, description, date, cover } = req.body;
 
       if (userRole !== 'mentor') throw new ErrorHandler(403, 'Usuário sem permissões suficientes.');
 
-      const live = await liveService.create(userId, date, title, description);
+      const live = await liveService.create(userId, date, title, description, cover);
 
       return res.status(201).json({
         status: 'Created',

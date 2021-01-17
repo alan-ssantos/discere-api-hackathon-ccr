@@ -18,12 +18,12 @@ module.exports = {
     return live;
   },
 
-  async create(userId, date, title, description) {
+  async create(userId, date, title, description, cover) {
     const user = await User.findById(userId);
     if (user.role !== 'mentor') throw new ErrorHandler(403, 'Usuário sem permissões suficientes.');
 
     const live = await Live.create({
-      title, date, description, mentor: user.id,
+      title, date, description, mentor: user.id, cover,
     });
     if (!live) throw new ErrorHandler(500, 'Não foi possível agendar a transmissão.');
 
