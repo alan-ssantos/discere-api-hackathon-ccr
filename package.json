@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/alan-ssantos/hackathon-ccr-api#readme",
   "dependencies": {
+    "agora-access-token": "^2.0.4",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

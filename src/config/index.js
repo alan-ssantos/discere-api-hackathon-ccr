@@ -4,4 +4,8 @@ module.exports = {
   port: process.env.PORT,
   databaseURL: process.env.DATABASE_URL,
   jwtSecret: process.env.JWT_SECRET,
+  agora: {
+    appId: process.env.AGORA_APP_ID,
+    appCertificate: process.env.AGORA_APP_CERTIFICATE,
+  },
 };
