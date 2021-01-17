@@ -41,6 +41,8 @@ Utilizando um sistema de "Lives", a Discere permite que os profissionais tirem d
 3. Execute o comando `npm install` para instalar as dependências;
 4. Crie o arquivo `.env.test` para adicionar as variáveis de ambiente conforme o aquivo `.env.example`;
 
+>[Documentação da API](https://documenter.getpostman.com/view/6748821/TVzViwNG#ed866630-2d01-41fc-bd67-27dede68e828)
+
 
 ## 🤝 Como contribuir
 
@@ -57,4 +59,4 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para
 
 ---
 
-Discere 🤝 Time 51 - [Hackathon CCR 2° Edição](https://discordapp.com/invite/gCRAFhc)
+Discere 🤝 Time 51 - [Hackathon CCR 2° Edição](http://www.grupoccr.com.br/hackathonccr/)
