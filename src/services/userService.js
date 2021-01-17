@@ -5,6 +5,19 @@ const Mentor = require('../models/Mentor');
 const { ErrorHandler } = require('../utils/error');
 
 module.exports = {
+  async index(params = {}) {
+    const users = await User.find(params, '-email');
+
+    const nUsers = users.map((u) => u.toObject());
+    return nUsers;
+  },
+
+  async detail(id) {
+    const user = await User.findById(id, '-email');
+
+    return user.toObject();
+  },
+
   async create(name, email, password, role) {
     let user;
 
@@ -19,23 +32,11 @@ module.exports = {
 
     if (!user) throw new ErrorHandler(500, 'Não foi possível cadastrar o usuário.');
 
-    const token = user.generateToken();
+    const token = await user.generateToken();
 
     return {
       user: user.toObject(),
       token,
     };
-  },
-
-  async findAll(params = {}) {
-    const users = await User.find(params);
-
-    return users;
-  },
-
-  async findById(id) {
-    const user = await User.findById(id);
-
-    return user;
   },
 };

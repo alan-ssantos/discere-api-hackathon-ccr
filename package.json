@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
-    "dev": "set NODE_ENV=test&&nodemon src/server.js"
+    "preinstall": "npm i pm2 -g",
+    "dev": "set NODE_ENV=test&&nodemon src/server.js",
+    "start": "pm2-runtime start ecosystem.config.js --env production"
   },
   "repository": {
     "type": "git",

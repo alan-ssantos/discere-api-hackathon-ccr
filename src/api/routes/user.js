@@ -4,15 +4,31 @@ const userService = require('../../services/userService');
 const route = Router();
 
 module.exports = (app) => {
-  app.use('/user', route);
+  app.use('/users', route);
+
+  route.get('/', async (req, res, next) => {
+    try {
+      const users = await userService.index();
+
+      return res.status(200).json({
+        status: 'OK',
+        statusCode: 200,
+        users,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  });
 
   route.get('/:id', async (req, res, next) => {
     try {
       const { id } = req.params;
-      const result = await userService.findById(id);
+      const user = await userService.detail(id);
 
-      return res.status(201).json({
-        result,
+      return res.status(200).json({
+        status: 'OK',
+        statusCode: 200,
+        user,
       });
     } catch (error) {
       return next(error);
@@ -25,11 +41,12 @@ module.exports = (app) => {
         name, email, password, role,
       } = req.body;
 
-      const result = await userService.create(name, email, password, role);
+      const user = await userService.create(name, email, password, role);
 
       return res.status(201).json({
-        message: 'Created',
-        result,
+        status: 'Created',
+        statusCode: 201,
+        user,
       });
     } catch (error) {
       return next(error);

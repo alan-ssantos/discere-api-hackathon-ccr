@@ -6,7 +6,36 @@ const auth = require('../middlewares/auth');
 const route = Router();
 
 module.exports = (router) => {
-  router.use('/live', route);
+  router.use('/lives', route);
+
+  route.get('/', async (req, res, next) => {
+    try {
+      const lives = await liveService.index();
+
+      return res.status(200).json({
+        status: 'OK',
+        statusCode: 200,
+        lives,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  });
+
+  route.get('/:id', async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const live = await liveService.detail(id);
+
+      return res.status(200).json({
+        status: 'OK',
+        statusCode: 200,
+        live,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  });
 
   route.post('/', auth, async (req, res, next) => {
     try {
@@ -15,9 +44,13 @@ module.exports = (router) => {
 
       if (userRole !== 'mentor') throw new ErrorHandler(403, 'Usuário sem permissões suficientes.');
 
-      const result = await liveService.create(userId, date, title, description);
+      const live = await liveService.create(userId, date, title, description);
 
-      return res.status(201).json({ result });
+      return res.status(201).json({
+        status: 'Created',
+        statusCode: 201,
+        live,
+      });
     } catch (error) {
       return next(error);
     }
@@ -30,9 +63,14 @@ module.exports = (router) => {
 
       if (userRole !== 'mentor') throw new ErrorHandler(403, 'Usuário sem permissões suficientes.');
 
-      const result = await liveService.start(userId, id);
+      const { liveStatus, live } = await liveService.start(userId, id);
 
-      return res.status(200).json({ result });
+      return res.status(200).json({
+        status: 'OK',
+        statusCode: 200,
+        liveStatus,
+        live,
+      });
     } catch (error) {
       return next(error);
     }
@@ -45,9 +83,14 @@ module.exports = (router) => {
 
       if (userRole !== 'mentor') throw new ErrorHandler(403, 'Usuário sem permissões suficientes.');
 
-      const result = await liveService.end(userId, id);
+      const { liveStatus, live } = await liveService.end(userId, id);
 
-      return res.status(200).json({ result });
+      return res.status(200).json({
+        status: 'OK',
+        statusCode: 200,
+        liveStatus,
+        live,
+      });
     } catch (error) {
       return next(error);
     }

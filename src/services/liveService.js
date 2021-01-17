@@ -6,6 +6,18 @@ const { ErrorHandler } = require('../utils/error');
 const agoraToken = require('../utils/agoraToken');
 
 module.exports = {
+  async index() {
+    const lives = await Live.find();
+
+    return lives;
+  },
+
+  async detail(id) {
+    const live = await Live.findById(id);
+
+    return live;
+  },
+
   async create(userId, date, title, description) {
     const user = await User.findById(userId);
     if (user.role !== 'mentor') throw new ErrorHandler(403, 'Usuário sem permissões suficientes.');
@@ -41,7 +53,10 @@ module.exports = {
     live.started = true;
     await live.save();
 
-    return live.started;
+    return {
+      liveStatus: live.started ? 'Started' : 'Not started',
+      live,
+    };
   },
 
   async end(userId, liveId) {
@@ -58,7 +73,10 @@ module.exports = {
     live.ended = true;
     await live.save();
 
-    return live.ended;
+    return {
+      liveStatus: live.started ? 'Ended' : 'Not ended',
+      live,
+    };
   },
 
 };

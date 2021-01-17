@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    select: false,
   },
   bio: String,
   picture: String,
@@ -32,6 +33,18 @@ const userSchema = new mongoose.Schema({
   },
 }, options);
 
+userSchema.set('toObject', {
+  getters: true,
+  transform: (doc, ret, options) => {
+    const aux = ret;
+    delete aux._id;
+    delete aux.__v;
+    delete aux.password;
+
+    return aux;
+  },
+});
+
 userSchema.pre('save', async function callback(next) {
   if (this.password) {
     const hash = await bcrypt.hash(this.password, 10);
@@ -41,7 +54,12 @@ userSchema.pre('save', async function callback(next) {
   next();
 });
 
-userSchema.methods.generateToken = function callback() {
+userSchema.methods.checkPassword = async function fn(password) {
+  const compare = await bcrypt.compare(password, this.password);
+  return compare;
+};
+
+userSchema.methods.generateToken = function fn() {
   return jwt.sign(
     {
       id: this.id,
